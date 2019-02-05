@@ -8,4 +8,11 @@ class QuotesSpider(scrapy.Spider):
     start_urls = ['http://quotes.toscrape.com/']
 
     def parse(self, response):
-        pass
+        quote_text = response.xpath('//*[@class="text"]/text()').extract()
+        # equivalent css locator
+        # response.css('span.text::text').extract()
+        top10_tags = response.xpath('//*[@class="tag-item"]/a/text()').extract()
+        # equivalent css locator
+        # response.css('span.tag-item a::text').extract()
+
+        yield {'Quotes': quote_text, 'Top10': top10_tags}
