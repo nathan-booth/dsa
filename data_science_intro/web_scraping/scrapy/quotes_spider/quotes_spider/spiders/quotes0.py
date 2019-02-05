@@ -3,6 +3,9 @@ import scrapy
 
 
 class BasicQuotesSpider(scrapy.Spider):
+    """
+    This spider will scrape the quotes from the given page and the top 10 tags.
+    """
     name = 'quotes0'
     allowed_domains = ['quotes.toscrape.com']
     start_urls = ['http://quotes.toscrape.com/']
