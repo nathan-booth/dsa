@@ -50,3 +50,38 @@ Use `pwd`, which means print working directory to find where you are in the file
     * `-l` print the names of files that contain matches
     * `-n` print line numbers with the matching line
     * `-v` print lines that do not match the pattern.
+
+## Redirection & Chaining
+
+Redirection allows you to save an output anywhere you want. For example, `head -n 5 <file1> > top.csv` saves the out of `head -n 5 <file1>` to a new file called `top.csv`.
+
+Use the `|` (pipe) character to avoid leaving intermediate files around. `head -n 5 seasonal/summer.csv | tail -n 3` uses the output of `head -n 5 seasonal/summer.csv` as the input of `tail -n 3`. Use the pipe character to chain together commands. `cut -d , -f 1 <csv file> | grep -v <column name> | head -n 10` selects the first column of a CSV file, selects all rows but the header, then outputs the top 10 rows of the resulting file.
+
+`wc [-c | -w | -l] <file>` (word count) prints the number of characters, words, or lines in a file.
+
+You can select many files at once or many files of a certain type by using the `*` wildcard. It will match zero or more characters like so:
+* `cut -d , f 1 <directory>/*` will get the first comma-separated column of all files in a directory.
+* `cut -d , f 1 <directory>/*.csv` will get the first column from every CSV file in the directory.
+
+Other wildcards include:
+* `?` which matches a single character. `201?.txt` will match `2019.txt` or `2010.txt` but not `2019-01.txt`.
+* `[]` will match any of the characters inside the brackets. `201[89].txt` matches `2018.txt` or `2019.txt` but not `2010.txt`.
+* `{}` will match any of the comma-separated patterns inside the braces. `{*.txt, *.csv}` will match any file ending in `.txt` or `.csv` but not `.pdf`. `{singh.pdf, j*.txt}` matches `singh.pdf` and `johel.txt` but not `sandhu.pdf` or `sandhu.txt`.
+
+`sort` orders an output alphabetically by default. Its flags include:
+* `-n` to sort numerically 
+* `-r` to reverse order
+* `-b` to ignore leading blanks
+* `-f` to fold case - that is, become case insensitive
+
+`cut -d , -f 2 <dir>/<filename>.csv | grep -v <column> | sort -r` reverse sorts the data from the second column of a CSV.
+
+Use `sort` with `uniq` to remove duplicate data. `cut -d , -f 2 <dir>/<filename>.csv | grep -v <column> | sort | uniq -c` returns a count of unqiue data entries. If you want to save this output, then use redirection at the end to put it in a file like `cut -d , -f 2 <dir>/<filename>.csv | grep -v <column> | sort | uniq -c > unique_counts.txt`.
+
+If you need to stop a command from executing because it is taking too long are you wrote in an error like a redirection in the middle of a pipe chain, then exit with CTRL+C.
+
+## Resources
+
+## Notes
+
+This is version 1.0 of this document and is based off my notes from the [DataCamp Unix Shell](https://www.datacamp.com/courses/introduction-to-shell-for-data-science) course by [Greg Wilson](https://twitter.com/gvwilson).
