@@ -80,6 +80,24 @@ Use `sort` with `uniq` to remove duplicate data. `cut -d , -f 2 <dir>/<filename>
 
 If you need to stop a command from executing because it is taking too long are you wrote in an error like a redirection in the middle of a pipe chain, then exit with CTRL+C.
 
+## Batch Processing
+
+The shell has environment variables, written in all caps, are always available. Use `set` to see them all but the most common are:
+* `HOME` which stores the user's home directory
+* `PWD` which stores the present working directory, the same as `pwd`
+* `SHELL` which stores the shell program in use
+* `USER` which stores the user's ID
+
+To print the value of the variable, use `echo $<VARIABLE>`.
+
+Shell variables are like a programming language's local variables. Create a variable and assign it a value like `<variable>=<value>`, then access its value as above with echo and $.
+
+Loops are used to repeat tasks. Their basic form is `for <variable> in <list>; do <task>; done`. For example, `for filename in <directory/*.csv; do echo $filename; done` lists all the CSV filenames in the directory. It is best practice to store the names of a set of files in a variale, like so `datasets=<directory>/*.csv`, then `for filename in $datasets; do echo $filename; done`. Beginners often forget to use the `$` symbol when they want to refer to the value of a variable. Long-time users usually run into errors by misspelling their variable.
+
+Using chains in the do clause of the loop to run many commands in a single loop, like `for file in <dir>/*.csv; do grep -h <column> $file; done` or `for file in <dir>/*.csv; do head -n 2 $file | tail -n 1; done`.
+
+In general, when working with files via the shell, avoid using spaces in the file name. Otherwise, you must enclose the whole file name in single quotes, like `'July 2019 Data.csv'`. `July 2019 Data.csv` looks like 3 different files to the shell.
+
 ## Resources
 
 ## Notes
