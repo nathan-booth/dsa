@@ -98,7 +98,52 @@ Using chains in the do clause of the loop to run many commands in a single loop,
 
 In general, when working with files via the shell, avoid using spaces in the file name. Otherwise, you must enclose the whole file name in single quotes, like `'July 2019 Data.csv'`. `July 2019 Data.csv` looks like 3 different files to the shell.
 
+## Creating New Tools
+
+*nano* is a popular text editor available in the shell. You might use it for quick and simple file creation and editing. I like using Visual Studio Code.
+
+You can write your command history to a file to record all your previous steps.  For example:
+```
+cp seasonal/spring.csv seasonal/summer.csv ~/
+grep -hv Tooth ~/spring.csv ~/summer.csv > temp.csv
+history | tail -n 3 > steps.txt
+```
+Line 1 copies two csv files to the home directory. Line 2 grabs all rows that don't have "Tooth" in them and redirects (writes or saves) them to a file. Line 3 captures the two previous lines plus the history command and redirects those commands to a text file to record the steps you took.
+
+You can save commands by writing them to a file, like above, then running the file. If the file `cmd_list.sh` has commands in it (called a shell script), then run it by invoking `bash cmd_list.sh`, where bash is the name of the shell program.
+
+You will want to pass in multiple filenames to a script you created. The `$@` symbols allow you to do this. Inside the file called `unique-lines.sh`:
+
+```
+sort $@ | uniq
+```
+
+Then, in the shell, run:
+
+```
+bash unique-lines.sh <file1> <file2> <...>
+```
+
+Loops in shell scripts (scripts) look a little different from writing them in the shell. The file might look like this:
+
+```
+# Print the first and last data records of each file.
+for filename in $@
+do
+    head -n 2 $filename | tail -n 1
+    tail -n 1 $filename
+done
+```
+
+The indentation isn't necesary but increases code readability. The line that begins with the `#` symbol is a comment. It is a note to the user and does not execute as code.
+
 ## Resources
+
+I haven't tried these out yet myself, but I'd like to hear about feedback from people who do. I intend to try them out in the future.
+
+* Steve Parker's [shell scripting tutorial](https://www.shellscript.sh/)
+* William Shotts' [shell scripting tutorial](http://linuxcommand.org/lc3_writing_shell_scripts.php)
+* GeeksForGeeks [shell scripting tutorial](https://www.geeksforgeeks.org/introduction-linux-shell-shell-scripting/)
 
 ## Notes
 
