@@ -98,7 +98,7 @@ Using chains in the do clause of the loop to run many commands in a single loop,
 
 In general, when working with files via the shell, avoid using spaces in the file name. Otherwise, you must enclose the whole file name in single quotes, like `'July 2019 Data.csv'`. `July 2019 Data.csv` looks like 3 different files to the shell.
 
-## Creating New Tools
+## Shell Scripting
 
 *nano* is a popular text editor available in the shell. You might use it for quick and simple file creation and editing. I like using Visual Studio Code.
 
