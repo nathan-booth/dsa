@@ -8,4 +8,6 @@ class JobsSpider(scrapy.Spider):
     start_urls = ['https://washingtondc.craigslist.org/d/software-qa-dba-etc/search/nva/sof']
 
     def parse(self, response):
-        pass
+        titles = response.xpath('//a[@class="result-title hdrlnk"]/text()').extract()
+        for title in titles:
+            yield {'Title': title}
