@@ -23,4 +23,17 @@ class SubjectsSpider(scrapy.Spider):
                 yield scrapy.Request(response.urljoin(subject), callback=self.parse_subject)
 
     def parse_subject(self, response):
-        pass
+        subject = response.xpath('//title/text()').extract_first().split('|')[0].split()[1:]
+        subject = ' '.join(subject)
+
+        courses = response.xpath('//*[@class="text--charcoal text-2 medium-up-text-1 block course-name"]')
+        for course in courses:
+            course_title = course.xpath('.//@title').extract_first()
+            course_url = course.xpath('.//@href').extract_first()
+            abs_course_url = response.urljoin(course_url)
+
+            yield {
+                'subject': subject,
+                'course_title': course_title,
+                'abs_course_url': abs_course_url
+            }
