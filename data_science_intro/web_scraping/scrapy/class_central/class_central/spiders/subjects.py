@@ -37,3 +37,7 @@ class SubjectsSpider(scrapy.Spider):
                 'course_title': course_title,
                 'abs_course_url': abs_course_url
             }
+
+        next_page_url = response.xpath('//*[@rel="next"]/@href').extract_first()
+        abs_next_page_url = response.urljoin(next_page_url)
+        yield scrapy.Request(abs_next_page_url, callback=self.parse_subject)
