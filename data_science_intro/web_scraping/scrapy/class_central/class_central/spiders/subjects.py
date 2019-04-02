@@ -4,7 +4,7 @@ import scrapy
 
 class SubjectsSpider(scrapy.Spider):
     name = 'subjects'
-    # allowed_domains = ['class-central.com']
+    allowed_domains = ['classcentral.com', 'class-central.com/subjects']
     start_urls = ['https://class-central.com/subjects']
 
     def __init__(self, subject=None):
