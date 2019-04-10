@@ -44,7 +44,8 @@ The `albums_sold` table:
 | 5 | Help! | 3 |
 
 Recreate the original table with joins.
-``` 
+
+```sql 
 SELECT * 
 FROM transactions 
 JOIN albums_sold 
@@ -80,7 +81,8 @@ The `albums_sold` table:
 | 5 | Help! | 3 |
 
 Recreate the original table with joins.
-``` 
+
+```sql
 SELECT * 
 FROM transactions 
 JOIN albums_sold 
